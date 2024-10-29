@@ -11,6 +11,6 @@ public interface AccountDao {
     List<Account> getAccountsByPhone(String phone);
     List<Account> getAccountsByEmail(String email);
     Account createAccount(Account account);
-    Account updateNickname(String nickname);
+    Account updateNickname(Account account, String nickname);
 
 }
