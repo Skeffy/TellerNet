@@ -12,4 +12,7 @@ public interface CustomerDao {
     List<Customer> getCustomersByAddress(String address);
     List<Customer> getCustomersByEmail(String email);
     List<Customer> getCustomersByDob(Date dob);
+    Customer createCustomer(Customer customer);
+    int updateCustomer(Customer customer);
+    int deleteCustomer(Customer customer);
 }
