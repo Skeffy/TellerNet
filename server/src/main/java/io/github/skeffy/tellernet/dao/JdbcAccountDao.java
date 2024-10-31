@@ -2,12 +2,14 @@ package io.github.skeffy.tellernet.dao;
 
 import io.github.skeffy.tellernet.exception.DaoException;
 import io.github.skeffy.tellernet.model.Account;
+import io.github.skeffy.tellernet.model.Customer;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,46 +37,15 @@ public class JdbcAccountDao implements AccountDao{
         return account;
     }
 
-    @Override
-    public List<Account> getAccountsByName(String firstName, String lastName) {
+    public List<Account> getAccountsByCustomer(Customer customer) {
         List<Account> accounts = new ArrayList<>();
-        String sql = "SELECT * FROM account a JOIN customer c ON (c.customer_id = a.customer_id) WHERE c.first_name ILIKE ? AND c.last_name ILIKE ?";
+        String sql = "SELECT * FROM account WHERE customer_id = ?";
         try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, firstName, lastName);
-            while(results.next()) {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, customer.getCustomerId());
+            while (results.next()) {
                 accounts.add(mapRowToAccount(results));
             }
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
-        }
-        return accounts;
-    }
-
-    @Override
-    public List<Account> getAccountsByPhone(String phone) {
-        List<Account> accounts = new ArrayList<>();
-        String sql = "SELECT * FROM account a JOIN customer c ON (c.customer_id = a.customer_id) WHERE phone ILIKE ?";
-        try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, phone);
-            while(results.next()) {
-                accounts.add(mapRowToAccount(results));
-            }
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
-        }
-        return accounts;
-    }
-
-    @Override
-    public List<Account> getAccountsByEmail(String email) {
-        List<Account> accounts = new ArrayList<>();
-        String sql = "SELECT * FROM account a JOIN customer c ON (c.customer_id = a.customer_id) WHERE c.email ILIKE ?";
-        try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, email);
-            while(results.next()) {
-                accounts.add(mapRowToAccount(results));
-            }
-        } catch (CannotGetJdbcConnectionException e) {
+        }  catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         }
         return accounts;
@@ -113,6 +84,25 @@ public class JdbcAccountDao implements AccountDao{
             throw new DaoException("Data integrity violation", e);
         }
         return updatedAccount;
+    }
+
+    @Override
+    public int deleteAccount(Account account) {
+        int rowsAffected = 0;
+        String sql = "DELETE * FROM transactions WHERE account_id = ?;" +
+                "DELETE FROM account WHERE account_id = ?";
+        if (account.getBalance().equals(BigDecimal.valueOf(0.00))) {
+            try {
+                rowsAffected = jdbcTemplate.update(sql, account.getAccountId(), account.getAccountId());
+            } catch (CannotGetJdbcConnectionException e) {
+                throw new DaoException("Unable to connect to server or database", e);
+            } catch (DataIntegrityViolationException e) {
+                throw new DaoException("Data integrity violation", e);
+            }
+        } else {
+            throw new DaoException("Account balance must be zero to close account");
+        }
+        return rowsAffected;
     }
 
     private Account mapRowToAccount(SqlRowSet results) {
