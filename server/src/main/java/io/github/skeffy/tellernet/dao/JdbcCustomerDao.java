@@ -53,6 +53,12 @@ public class JdbcCustomerDao implements CustomerDao{
 
     @Override
     public List<Customer> getCustomersByName(String firstName, String lastName) {
+        if (firstName == null) {
+            firstName = "";
+        }
+        if (lastName == null) {
+            lastName = "";
+        }
         firstName = "%" + firstName + "%";
         lastName = "%" + lastName + "%";
         List<Customer> customers = new ArrayList<>();
