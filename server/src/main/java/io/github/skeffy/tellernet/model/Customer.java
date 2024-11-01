@@ -1,5 +1,6 @@
 package io.github.skeffy.tellernet.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Customer {
@@ -10,9 +11,9 @@ public class Customer {
     private String phone;
     private String address;
     private String email;
-    private Date dob;
+    private LocalDate dob;
 
-    public Customer(int customerId, String firstName, String lastName, String phone, String address, String email, Date dob) {
+    public Customer(int customerId, String firstName, String lastName, String phone, String address, String email, LocalDate dob) {
         this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -20,6 +21,10 @@ public class Customer {
         this.address = address;
         this.email = email;
         this.dob = dob;
+    }
+
+    public Customer() {
+
     }
 
     public int getCustomerId() {
@@ -70,11 +75,11 @@ public class Customer {
         this.email = email;
     }
 
-    public Date getDob() {
+    public LocalDate getDob() {
         return dob;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(LocalDate dob) {
         this.dob = dob;
     }
 }
