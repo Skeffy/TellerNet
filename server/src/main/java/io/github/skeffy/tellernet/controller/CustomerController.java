@@ -4,10 +4,7 @@ import io.github.skeffy.tellernet.dao.CustomerDao;
 import io.github.skeffy.tellernet.exception.DaoException;
 import io.github.skeffy.tellernet.model.Customer;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
@@ -24,9 +21,11 @@ public class CustomerController {
     }
 
     @GetMapping
-    public List<Customer> getCustomers(@RequestBody Customer customer) {
+    public List<Customer> getCustomers(@RequestBody (required = false) Customer customer) {
         try {
-            if (customer.getFirstName() != null || customer.getLastName() != null) {
+            if (customer == null) {
+                return customerDao.getCustomers();
+            } else if (customer.getFirstName() != null || customer.getLastName() != null) {
                 return customerDao.getCustomersByName(customer.getFirstName(), customer.getLastName());
             } else if (customer.getDob() != null) {
                 return customerDao.getCustomersByDob(customer.getDob());
@@ -39,6 +38,35 @@ public class CustomerController {
             } else {
                 return customerDao.getCustomers();
             }
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
+        }
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Customer createCustomer(@RequestBody Customer customer) {
+        try {
+            return customerDao.createCustomer(customer);
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
+        }
+    }
+
+    @PutMapping
+    public void updateCustomer(@RequestBody Customer customer) {
+        try {
+            customerDao.updateCustomer(customer);
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
+        }
+    }
+
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCustomer(Customer customer) {
+        try {
+            customerDao.deleteCustomer(customer);
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
         }
