@@ -53,7 +53,7 @@ public class JdbcTransactionDao implements TransactionDao{
 
     @Override
     public Transaction createTransaction(Transaction transaction) {
-        Transaction newTransaction = new Transaction();
+        Transaction newTransaction;
         String sql = "INSERT INTO transaction(amount, description, time, account_id) VALUES (?, ?, ?, ?) RETURNING transaction_id";
         try {
             int newId = jdbcTemplate.queryForObject(sql, int.class, transaction.getAmount(), transaction.getDescription(),
@@ -67,6 +67,23 @@ public class JdbcTransactionDao implements TransactionDao{
             throw new DaoException("Data integrity violation", e);
         }
         return newTransaction;
+    }
+
+    @Override
+    public int deleteTransaction(int id) {
+        int rowsAffected;
+        String sql = "DELETE * FROM transaction WHERE transaction_id = ?";
+        try {
+            rowsAffected = jdbcTemplate.update(sql, id);
+            if (rowsAffected == 0) {
+                throw new DaoException("Zero rows affected. Expected at least one");
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+        return rowsAffected;
     }
 
     private Transaction mapRowToTransaction(SqlRowSet results) {
