@@ -157,7 +157,7 @@ public class JdbcCustomerDao implements CustomerDao{
 
     @Override
     public int updateCustomer(Customer customer) {
-        int rowsAffected = 0;
+        int rowsAffected;
         String sql = "UPDATE customer SET first_name = ? last_name = ? email = ? address = ? phone = ?";
         try {
             rowsAffected = jdbcTemplate.update(sql, customer.getFirstName(), customer.getLastName(), customer.getEmail(),
@@ -175,7 +175,7 @@ public class JdbcCustomerDao implements CustomerDao{
 
     @Override
     public int deleteCustomer(Customer customer) {
-        int rowsAffected = 0;
+        int rowsAffected;
         String sql = "DELETE * FROM customer WHERE customer_id = ?";
         try {
             rowsAffected = jdbcTemplate.update(sql, customer.getCustomerId());
