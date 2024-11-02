@@ -53,7 +53,7 @@ public class JdbcAccountDao implements AccountDao{
 
     @Override
     public Account createAccount(Account account) {
-        Account newAccount = new Account();
+        Account newAccount;
         String sql = "INSERT INTO account(customer_id, nickname) VALUES (?, ?) returning account_id";
         try {
             int newId = jdbcTemplate.queryForObject(sql, int.class, account.getCustomerId(), account.getNickname());
@@ -70,7 +70,7 @@ public class JdbcAccountDao implements AccountDao{
 
     @Override
     public Account updateNickname(Account account, String nickname) {
-        Account updatedAccount = null;
+        Account updatedAccount;
         String sql = "UPDATE account SET nickname = ? WHERE account_id = ?";
         try {
             int rowsAffected = jdbcTemplate.update(sql, nickname, account.getAccountId());
@@ -88,12 +88,15 @@ public class JdbcAccountDao implements AccountDao{
 
     @Override
     public int deleteAccount(Account account) {
-        int rowsAffected = 0;
+        int rowsAffected;
         String sql = "DELETE * FROM transactions WHERE account_id = ?;" +
                 "DELETE FROM account WHERE account_id = ?";
         if (account.getBalance().equals(BigDecimal.valueOf(0.00))) {
             try {
                 rowsAffected = jdbcTemplate.update(sql, account.getAccountId(), account.getAccountId());
+                if (rowsAffected == 0) {
+                    throw new DaoException("Zero rows affected. Expected at least one");
+                }
             } catch (CannotGetJdbcConnectionException e) {
                 throw new DaoException("Unable to connect to server or database", e);
             } catch (DataIntegrityViolationException e) {
