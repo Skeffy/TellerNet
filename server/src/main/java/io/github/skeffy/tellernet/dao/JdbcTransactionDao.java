@@ -69,23 +69,6 @@ public class JdbcTransactionDao implements TransactionDao{
         return newTransaction;
     }
 
-    @Override
-    public int deleteTransaction(int id) {
-        int rowsAffected;
-        String sql = "DELETE * FROM transaction WHERE transaction_id = ?";
-        try {
-            rowsAffected = jdbcTemplate.update(sql, id);
-            if (rowsAffected == 0) {
-                throw new DaoException("Zero rows affected. Expected at least one");
-            }
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
-        } catch (DataIntegrityViolationException e) {
-            throw new DaoException("Data integrity violation", e);
-        }
-        return rowsAffected;
-    }
-
     private Transaction mapRowToTransaction(SqlRowSet results) {
         Transaction transaction = new Transaction();
         transaction.setTransactionId(results.getInt("transaction_id"));

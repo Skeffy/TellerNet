@@ -9,5 +9,4 @@ public interface TransactionDao {
     List<Transaction> getTransactionsByAccount(Account account);
     Transaction getTransactionById(int id);
     Transaction createTransaction(Transaction transaction);
-    int deleteTransaction(int id);
 }
