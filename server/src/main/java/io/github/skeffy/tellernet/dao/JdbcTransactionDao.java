@@ -9,8 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,12 +52,13 @@ public class JdbcTransactionDao implements TransactionDao{
     }
 
     @Override
-    public Transaction createTransaction(BigDecimal amount, String description, Account account, Timestamp timestamp) {
-        Transaction transaction = new Transaction();
+    public Transaction createTransaction(Transaction transaction) {
+        Transaction newTransaction = new Transaction();
         String sql = "INSERT INTO transaction(amount, description, time, account_id) VALUES (?, ?, ?, ?) RETURNING transaction_id";
         try {
-            int newId = jdbcTemplate.queryForObject(sql, int.class, amount, description, timestamp, account.getAccountId());
-            transaction = getTransactionById(newId);
+            int newId = jdbcTemplate.queryForObject(sql, int.class, transaction.getAmount(), transaction.getDescription(),
+                    transaction.getTime(), transaction.getAccountId());
+            newTransaction = getTransactionById(newId);
         } catch (NullPointerException e) {
             throw new DaoException("Error adding entry to the database", e);
         } catch (CannotGetJdbcConnectionException e) {
@@ -67,7 +66,7 @@ public class JdbcTransactionDao implements TransactionDao{
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
-        return transaction;
+        return newTransaction;
     }
 
     private Transaction mapRowToTransaction(SqlRowSet results) {
