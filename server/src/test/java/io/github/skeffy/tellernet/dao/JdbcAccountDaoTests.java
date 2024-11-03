@@ -63,6 +63,15 @@ public class JdbcAccountDaoTests extends BaseDaoTests{
     }
 
     @Test
-    public void updateAccount_correctly_updates_nickname() {}
-    Account account = dao.updateNickname()
+    public void updateAccount_correctly_updates_nickname() {
+        Account account = new Account(1, 1, "updated", new BigDecimal("0.00"), new ArrayList<>());
+        Account updatedAccount = dao.updateNickname(account);
+
+        Assert.assertNotNull(updatedAccount);
+        Assert.assertEquals(ACCOUNT_1.getAccountId(), updatedAccount.getAccountId());
+        Assert.assertEquals(ACCOUNT_1.getCustomerId(), updatedAccount.getCustomerId());
+        Assert.assertEquals(account.getNickname(), updatedAccount.getNickname());
+        Assert.assertEquals(ACCOUNT_1.getBalance(), updatedAccount.getBalance());
+        Assert.assertEquals(ACCOUNT_1.getTransactions(), updatedAccount.getTransactions());
+    }
 }
