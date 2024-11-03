@@ -25,7 +25,7 @@ CREATE TABLE account (
 CREATE TABLE transaction (
 	transaction_id SERIAL,
 	account_id INT NOT NULL,
-	time TIMESTAMP NOT NULL,
+	transaction_date DATE DEFAULT CURRENT_DATE,
 	amount NUMERIC(10, 2) NOT NULL,
 	description VARCHAR(100) NOT NULL,
 	CONSTRAINT PK_transaction PRIMARY KEY (transaction_id),
