@@ -1,5 +1,6 @@
 package io.github.skeffy.tellernet.dao;
 
+import io.github.skeffy.tellernet.exception.DaoException;
 import io.github.skeffy.tellernet.model.Account;
 import io.github.skeffy.tellernet.model.Customer;
 import org.junit.Assert;
@@ -15,6 +16,8 @@ import java.util.List;
 public class JdbcAccountDaoTests extends BaseDaoTests{
     protected static final Account ACCOUNT_1 = new Account(1, 1, "checking", new BigDecimal("0.00"), new ArrayList<>());
     protected static final Account ACCOUNT_2 = new Account(8, 1, "new", new BigDecimal("0.00"), new ArrayList<>());
+    protected static final Account ACCOUNT_3 = new Account(7, 3, "", new BigDecimal("1056.62"), new ArrayList<>());
+    protected static final Account ACCOUNT_4 = new Account(6, 5, "checking", new BigDecimal("0.00"), new ArrayList<>());
     protected static final Customer CUSTOMER_1 = new Customer(1, "Noah", "Stevens", "555-555-5555", "123 Main St", "dontstealmymoney@gmail.com", LocalDate.of(1998, 7, 22));
 
     private JdbcAccountDao dao;
@@ -27,14 +30,14 @@ public class JdbcAccountDaoTests extends BaseDaoTests{
 
     @Test
     public void getAccountById_returns_valid_account() {
-        Account account = dao.getAccountById(1);
+        Account account = dao.getAccountById(ACCOUNT_4.getAccountId());
 
         Assert.assertNotNull(account);
-        Assert.assertEquals(ACCOUNT_1.getAccountId(), account.getAccountId());
-        Assert.assertEquals(ACCOUNT_1.getCustomerId(), account.getCustomerId());
-        Assert.assertEquals(ACCOUNT_1.getNickname(), account.getNickname());
-        Assert.assertEquals(ACCOUNT_1.getBalance(), account.getBalance());
-        Assert.assertEquals(ACCOUNT_1.getTransactions(), account.getTransactions());
+        Assert.assertEquals(ACCOUNT_4.getAccountId(), account.getAccountId());
+        Assert.assertEquals(ACCOUNT_4.getCustomerId(), account.getCustomerId());
+        Assert.assertEquals(ACCOUNT_4.getNickname(), account.getNickname());
+        Assert.assertEquals(ACCOUNT_4.getBalance(), account.getBalance());
+        Assert.assertEquals(ACCOUNT_4.getTransactions(), account.getTransactions());
     }
 
     @Test
@@ -73,5 +76,19 @@ public class JdbcAccountDaoTests extends BaseDaoTests{
         Assert.assertEquals(account.getNickname(), updatedAccount.getNickname());
         Assert.assertEquals(ACCOUNT_1.getBalance(), updatedAccount.getBalance());
         Assert.assertEquals(ACCOUNT_1.getTransactions(), updatedAccount.getTransactions());
+    }
+
+    @Test
+    public void deleteAccount_does_not_delete_account_without_0_balance() {
+        Assert.assertThrows(DaoException.class, () -> {
+            dao.deleteAccount(ACCOUNT_3);
+        });
+    }
+
+    @Test
+    public void deleteAccount_deletes_account_with_0_balance() {
+        int rows = dao.deleteAccount(ACCOUNT_1);
+
+        Assert.assertEquals(1, rows);
     }
 }
