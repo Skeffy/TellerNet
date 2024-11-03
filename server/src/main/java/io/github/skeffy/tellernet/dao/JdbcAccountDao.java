@@ -69,11 +69,11 @@ public class JdbcAccountDao implements AccountDao{
     }
 
     @Override
-    public Account updateNickname(Account account, String nickname) {
+    public Account updateNickname(Account account) {
         Account updatedAccount;
         String sql = "UPDATE account SET nickname = ? WHERE account_id = ?";
         try {
-            int rowsAffected = jdbcTemplate.update(sql, nickname, account.getAccountId());
+            int rowsAffected = jdbcTemplate.update(sql, account.getNickname(), account.getAccountId());
             if (rowsAffected == 0) {
                 throw new DaoException("Zero rows affected. Expected at least one");
             }
@@ -89,7 +89,7 @@ public class JdbcAccountDao implements AccountDao{
     @Override
     public int deleteAccount(Account account) {
         int rowsAffected;
-        String sql = "DELETE * FROM transactions WHERE account_id = ?;" +
+        String sql = "DELETE FROM transactions WHERE account_id = ?;" +
                 "DELETE FROM account WHERE account_id = ?";
         if (account.getBalance().equals(BigDecimal.valueOf(0.00))) {
             try {
