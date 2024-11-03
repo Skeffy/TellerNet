@@ -89,14 +89,16 @@ public class JdbcAccountDao implements AccountDao{
     @Override
     public int deleteAccount(Account account) {
         int rowsAffected;
-        String sql = "DELETE FROM transactions WHERE account_id = ?;" +
-                "DELETE FROM account WHERE account_id = ?";
-        if (account.getBalance().equals(BigDecimal.valueOf(0.00))) {
+        String sql =
+                "DELETE FROM account WHERE account_id = ?; " +
+                "COMMIT;";
+        String transactionSql =
+                "START TRANSACTION; " +
+                "DELETE FROM transaction WHERE account_id = ?";
+        if (account.getBalance().equals(new BigDecimal("0.00"))) {
             try {
-                rowsAffected = jdbcTemplate.update(sql, account.getAccountId(), account.getAccountId());
-                if (rowsAffected == 0) {
-                    throw new DaoException("Zero rows affected. Expected at least one");
-                }
+                jdbcTemplate.update(transactionSql, account.getAccountId());
+                rowsAffected = jdbcTemplate.update(sql, account.getAccountId());
             } catch (CannotGetJdbcConnectionException e) {
                 throw new DaoException("Unable to connect to server or database", e);
             } catch (DataIntegrityViolationException e) {
