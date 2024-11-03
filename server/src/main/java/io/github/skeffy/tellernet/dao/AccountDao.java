@@ -10,6 +10,6 @@ public interface AccountDao {
     Account getAccountById(int accountId);
     List<Account> getAccountsByCustomer(Customer customer);
     Account createAccount(Account account);
-    Account updateNickname(Account account, String nickname);
+    Account updateNickname(Account account);
     int deleteAccount(Account account);
 }
