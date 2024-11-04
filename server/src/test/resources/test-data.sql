@@ -12,16 +12,16 @@ INSERT INTO account (customer_id, nickname, balance) VALUES
 	(1, 'savings', 0.00),
 	(2, 'fun money', 0.00),
 	(3, 'secret stash', 0.00),
-	(4, 'savings', 0.00),
+	(5, 'savings', 0.00),
 	(5, 'checking', 0.00),
 	(3, '', 1056.62);
 
-INSERT INTO transaction (account_id, amount, description) VALUES
-	(2, 100.00, 'Cash deposit'),
-	(2, 738.55, 'Payroll deposit'),
-	(2, -34.18, 'Uber eats'),
-	(3, 500.00, 'Cash deposit'),
-	(4, 350.00, 'Cash deposit'),
-	(4, -83.57, 'Amazon.com');
+INSERT INTO transaction (account_id, amount, description, transaction_date) VALUES
+	(2, 100.00, 'Cash deposit', '10-11-2024'),
+	(2, 738.55, 'Payroll deposit', '10-25-2024'),
+	(2, -34.18, 'Uber eats', '10-28-2024'),
+	(3, 500.00, 'Cash deposit', '9-18-2024'),
+	(4, 350.00, 'Cash deposit', '9-3-2024'),
+	(4, -83.57, 'Amazon.com', '10-2-2024');
 
 COMMIT;
