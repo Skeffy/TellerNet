@@ -1,20 +1,20 @@
 package io.github.skeffy.tellernet.model;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 public class Transaction {
 
     private int transactionId;
     private int accountId;
-    private Timestamp time;
+    private LocalDate transactionDate;
     private BigDecimal amount;
     private String description;
 
-    public Transaction(int transactionId, int accountId, Timestamp time, BigDecimal amount, String description) {
+    public Transaction(int transactionId, int accountId, LocalDate transactionDate, BigDecimal amount, String description) {
         this.transactionId = transactionId;
         this.accountId = accountId;
-        this.time = time;
+        this.transactionDate = transactionDate;
         this.amount = amount;
         this.description = description;
     }
@@ -39,12 +39,12 @@ public class Transaction {
         this.accountId = accountId;
     }
 
-    public Timestamp getTime() {
-        return time;
+    public LocalDate getTransactionDate() {
+        return transactionDate;
     }
 
-    public void setTime(Timestamp time) {
-        this.time = time;
+    public void setTransactionDate(LocalDate transactionDate) {
+        this.transactionDate = transactionDate;
     }
 
     public BigDecimal getAmount() {
