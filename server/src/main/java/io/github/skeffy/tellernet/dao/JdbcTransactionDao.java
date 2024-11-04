@@ -57,7 +57,7 @@ public class JdbcTransactionDao implements TransactionDao{
         String sql = "INSERT INTO transaction(amount, description, time, account_id) VALUES (?, ?, ?, ?) RETURNING transaction_id";
         try {
             int newId = jdbcTemplate.queryForObject(sql, int.class, transaction.getAmount(), transaction.getDescription(),
-                    transaction.getTime(), transaction.getAccountId());
+                    transaction.getTransactionDate(), transaction.getAccountId());
             newTransaction = getTransactionById(newId);
         } catch (NullPointerException e) {
             throw new DaoException("Error adding entry to the database", e);
@@ -72,7 +72,7 @@ public class JdbcTransactionDao implements TransactionDao{
     private Transaction mapRowToTransaction(SqlRowSet results) {
         Transaction transaction = new Transaction();
         transaction.setTransactionId(results.getInt("transaction_id"));
-        transaction.setTime(results.getTimestamp("timestamp"));
+        transaction.setTransactionDate(results.getDate("transaction_date").toLocalDate());
         transaction.setDescription(results.getString("description"));
         transaction.setAccountId(results.getInt("account_id"));
         transaction.setAmount(results.getBigDecimal("amount"));
