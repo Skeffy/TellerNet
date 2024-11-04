@@ -1,6 +1,7 @@
 package io.github.skeffy.tellernet.dao;
 
 import io.github.skeffy.tellernet.exception.DaoException;
+import io.github.skeffy.tellernet.model.Account;
 import io.github.skeffy.tellernet.model.Customer;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -17,9 +18,11 @@ import java.util.List;
 public class JdbcCustomerDao implements CustomerDao{
 
     private final JdbcTemplate jdbcTemplate;
+    private final JdbcAccountDao accountDao;
 
-    public JdbcCustomerDao(JdbcTemplate jdbcTemplate) {
+    public JdbcCustomerDao(JdbcTemplate jdbcTemplate, JdbcAccountDao accountDao) {
         this.jdbcTemplate = jdbcTemplate;
+        this.accountDao = accountDao;
     }
 
     @Override
@@ -39,12 +42,13 @@ public class JdbcCustomerDao implements CustomerDao{
 
     @Override
     public Customer getCustomerById(int id) {
-        Customer customer = new Customer();
+        Customer customer = null;
         String sql = "SELECT * FROM customer WHERE customer_id = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
             if (results.next()) {
                 customer = mapRowToCustomer(results);
+                customer.setAccounts(accountDao.getAccountsByCustomer(customer));
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
@@ -159,10 +163,10 @@ public class JdbcCustomerDao implements CustomerDao{
     @Override
     public int updateCustomer(Customer customer) {
         int rowsAffected;
-        String sql = "UPDATE customer SET first_name = ? last_name = ? email = ? address = ? phone = ?";
+        String sql = "UPDATE customer SET first_name = ?, last_name = ?, email = ?, address = ?, phone = ? WHERE customer_id = ?";
         try {
             rowsAffected = jdbcTemplate.update(sql, customer.getFirstName(), customer.getLastName(), customer.getEmail(),
-                    customer.getAddress(), customer.getPhone());
+                    customer.getAddress(), customer.getPhone(), customer.getCustomerId());
             if (rowsAffected == 0) {
                 throw new DaoException("Zero rows affected. Expected at least one");
             }
@@ -177,15 +181,19 @@ public class JdbcCustomerDao implements CustomerDao{
     @Override
     public int deleteCustomer(Customer customer) {
         int rowsAffected;
-        String sql = "DELETE * FROM customer WHERE customer_id = ?";
-        try {
-            rowsAffected = jdbcTemplate.update(sql, customer.getCustomerId());
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
-        } catch (DataIntegrityViolationException e) {
-            throw new DaoException("Data integrity violation", e);
+        String sql = "DELETE FROM customer WHERE customer_id = ?";
+        if (!customer.hasAccount()) {
+            try {
+                rowsAffected = jdbcTemplate.update(sql, customer.getCustomerId());
+            } catch (CannotGetJdbcConnectionException e) {
+                throw new DaoException("Unable to connect to server or database", e);
+            } catch (DataIntegrityViolationException e) {
+                throw new DaoException("Data integrity violation", e);
+            }
+            return rowsAffected;
+        } else {
+            throw new DaoException("Cannot delete customer with open accounts");
         }
-        return rowsAffected;
     }
 
     private Customer mapRowToCustomer(SqlRowSet results) {
