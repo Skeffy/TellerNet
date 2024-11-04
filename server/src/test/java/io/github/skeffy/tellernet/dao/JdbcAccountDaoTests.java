@@ -33,11 +33,7 @@ public class JdbcAccountDaoTests extends BaseDaoTests{
         Account account = dao.getAccountById(ACCOUNT_4.getAccountId());
 
         Assert.assertNotNull(account);
-        Assert.assertEquals(ACCOUNT_4.getAccountId(), account.getAccountId());
-        Assert.assertEquals(ACCOUNT_4.getCustomerId(), account.getCustomerId());
-        Assert.assertEquals(ACCOUNT_4.getNickname(), account.getNickname());
-        Assert.assertEquals(ACCOUNT_4.getBalance(), account.getBalance());
-        Assert.assertEquals(ACCOUNT_4.getTransactions(), account.getTransactions());
+        assertAccountsMatch(ACCOUNT_4, account);
     }
 
     @Test
@@ -46,11 +42,7 @@ public class JdbcAccountDaoTests extends BaseDaoTests{
 
         Assert.assertNotNull(accounts);
         Assert.assertEquals(2, accounts.size());
-        Assert.assertEquals(ACCOUNT_1.getAccountId(), accounts.getFirst().getAccountId());
-        Assert.assertEquals(ACCOUNT_1.getCustomerId(), accounts.getFirst().getCustomerId());
-        Assert.assertEquals(ACCOUNT_1.getNickname(), accounts.getFirst().getNickname());
-        Assert.assertEquals(ACCOUNT_1.getBalance(), accounts.getFirst().getBalance());
-        Assert.assertEquals(ACCOUNT_1.getTransactions(), accounts.getFirst().getTransactions());
+        assertAccountsMatch(ACCOUNT_1, accounts.getFirst());
     }
 
     @Test
@@ -58,11 +50,7 @@ public class JdbcAccountDaoTests extends BaseDaoTests{
         Account account = dao.createAccount(new Account(8, 1, "new", new BigDecimal("0.00"), new ArrayList<>()));
 
         Assert.assertNotNull(account);
-        Assert.assertEquals(ACCOUNT_2.getAccountId(), account.getAccountId());
-        Assert.assertEquals(ACCOUNT_2.getCustomerId(), account.getCustomerId());
-        Assert.assertEquals(ACCOUNT_2.getNickname(), account.getNickname());
-        Assert.assertEquals(ACCOUNT_2.getBalance(), account.getBalance());
-        Assert.assertEquals(ACCOUNT_2.getTransactions(), account.getTransactions());
+        assertAccountsMatch(ACCOUNT_2, account);
     }
 
     @Test
@@ -71,11 +59,7 @@ public class JdbcAccountDaoTests extends BaseDaoTests{
         Account updatedAccount = dao.updateNickname(account);
 
         Assert.assertNotNull(updatedAccount);
-        Assert.assertEquals(ACCOUNT_1.getAccountId(), updatedAccount.getAccountId());
-        Assert.assertEquals(ACCOUNT_1.getCustomerId(), updatedAccount.getCustomerId());
-        Assert.assertEquals(account.getNickname(), updatedAccount.getNickname());
-        Assert.assertEquals(ACCOUNT_1.getBalance(), updatedAccount.getBalance());
-        Assert.assertEquals(ACCOUNT_1.getTransactions(), updatedAccount.getTransactions());
+        assertAccountsMatch(account, updatedAccount);
     }
 
     @Test
@@ -90,5 +74,13 @@ public class JdbcAccountDaoTests extends BaseDaoTests{
         int rows = dao.deleteAccount(ACCOUNT_1);
 
         Assert.assertEquals(1, rows);
+    }
+
+    private void assertAccountsMatch(Account expected, Account actual) {
+        Assert.assertEquals("Account ids do not match", expected.getAccountId(), actual.getAccountId());
+        Assert.assertEquals("Customer ids do not match", expected.getCustomerId(), actual.getCustomerId());
+        Assert.assertEquals("Account nicknames do not match", expected.getNickname(), actual.getNickname());
+        Assert.assertEquals("Account balances do not match", expected.getBalance(), actual.getBalance());
+        Assert.assertEquals("Account transactions do not match", expected.getTransactions(), actual.getTransactions());
     }
 }
