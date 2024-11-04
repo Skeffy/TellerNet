@@ -141,10 +141,10 @@ public class JdbcCustomerDao implements CustomerDao{
     @Override
     public Customer createCustomer(Customer customer) {
         Customer newCustomer;
-        String sql = "INSERT INTO customer(first_name, last_name, phone, address, email, dob) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO customer (first_name, last_name, phone, address, email, dob) VALUES (?, ?, ?, ?, ?, ?) RETURNING customer_id";
         try {
             int newId = jdbcTemplate.queryForObject(sql, int.class, customer.getFirstName(), customer.getLastName(),
-                    customer.getPhone(), customer.getAddress(), customer.getEmail(), customer.getDob());
+                    customer.getPhone(), customer.getAddress(), customer.getEmail(), Date.valueOf(customer.getDob()));
             newCustomer = getCustomerById(newId);
         } catch (NullPointerException e) {
             throw new DaoException("Error adding entry to the database", e);
