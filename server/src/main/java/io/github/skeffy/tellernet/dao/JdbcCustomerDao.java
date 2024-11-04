@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -125,9 +126,9 @@ public class JdbcCustomerDao implements CustomerDao{
     @Override
     public List<Customer> getCustomersByDob(LocalDate dob) {
         List<Customer> customers = new ArrayList<>();
-        String sql = "SELECT * FROM customer WHERE dob ILIKE ?";
+        String sql = "SELECT * FROM customer WHERE CAST(dob AS DATE) = ?";
         try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, dob);
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, Date.valueOf(dob));
             while (results.next()) {
                 customers.add(mapRowToCustomer(results));
             }
