@@ -45,10 +45,27 @@ public class JdbcAccountDao implements AccountDao{
             while (results.next()) {
                 accounts.add(mapRowToAccount(results));
             }
-        }  catch (CannotGetJdbcConnectionException e) {
+        } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         }
         return accounts;
+    }
+
+    @Override
+    public Account transact(Account account) {
+        int rowsAffected;
+        String sql = "UPDATE account SET balance = ? WHERE account_id = ?";
+        try {
+            rowsAffected = jdbcTemplate.update(sql, account.getBalance());
+            if (rowsAffected == 0) {
+                throw new DaoException("Zero rows affected. Expected at least one");
+            } else {
+                account = getAccountById(account.getAccountId());
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return account;
     }
 
     @Override
