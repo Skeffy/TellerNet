@@ -7,10 +7,12 @@ import io.github.skeffy.tellernet.model.Account;
 import io.github.skeffy.tellernet.model.Customer;
 import io.github.skeffy.tellernet.model.Profile;
 import io.github.skeffy.tellernet.model.Transaction;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ProfileBuilder {
 
     private AccountDao accountDao;
