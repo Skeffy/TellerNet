@@ -2,6 +2,7 @@ package io.github.skeffy.tellernet.dao;
 
 import io.github.skeffy.tellernet.exception.DaoException;
 import io.github.skeffy.tellernet.model.Customer;
+import io.github.skeffy.tellernet.model.Profile;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,11 +18,9 @@ import java.util.List;
 public class JdbcCustomerDao implements CustomerDao{
 
     private final JdbcTemplate jdbcTemplate;
-    private final JdbcAccountDao accountDao;
 
-    public JdbcCustomerDao(JdbcTemplate jdbcTemplate, JdbcAccountDao accountDao) {
+    public JdbcCustomerDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.accountDao = accountDao;
     }
 
     @Override
@@ -47,7 +46,6 @@ public class JdbcCustomerDao implements CustomerDao{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
             if (results.next()) {
                 customer = mapRowToCustomer(results);
-                customer.setAccounts(accountDao.getAccountsByCustomer(customer));
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
@@ -178,12 +176,12 @@ public class JdbcCustomerDao implements CustomerDao{
     }
 
     @Override
-    public int deleteCustomer(Customer customer) {
+    public int deleteCustomer(Profile profile) {
         int rowsAffected;
         String sql = "DELETE FROM customer WHERE customer_id = ?";
-        if (!customer.hasAccount()) {
+        if (!profile.hasAccount()) {
             try {
-                rowsAffected = jdbcTemplate.update(sql, customer.getCustomerId());
+                rowsAffected = jdbcTemplate.update(sql, profile.getCustomer().getCustomerId());
             } catch (CannotGetJdbcConnectionException e) {
                 throw new DaoException("Unable to connect to server or database", e);
             } catch (DataIntegrityViolationException e) {
