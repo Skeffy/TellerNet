@@ -1,6 +1,7 @@
 package io.github.skeffy.tellernet.dao;
 
 import io.github.skeffy.tellernet.model.Customer;
+import io.github.skeffy.tellernet.model.Profile;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -17,5 +18,5 @@ public interface CustomerDao {
     List<Customer> getCustomersByDob(LocalDate dob);
     Customer createCustomer(Customer customer);
     int updateCustomer(Customer customer);
-    int deleteCustomer(Customer customer);
+    int deleteCustomer(Profile profile);
 }
