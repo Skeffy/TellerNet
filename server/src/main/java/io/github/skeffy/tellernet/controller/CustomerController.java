@@ -3,6 +3,7 @@ package io.github.skeffy.tellernet.controller;
 import io.github.skeffy.tellernet.dao.CustomerDao;
 import io.github.skeffy.tellernet.exception.DaoException;
 import io.github.skeffy.tellernet.model.Customer;
+import io.github.skeffy.tellernet.service.ProfileBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,9 +15,11 @@ import java.util.List;
 public class CustomerController {
 
     private CustomerDao customerDao;
+    private ProfileBuilder profileBuilder;
 
-    public CustomerController(CustomerDao customerDao) {
+    public CustomerController(CustomerDao customerDao, ProfileBuilder profileBuilder) {
         this.customerDao = customerDao;
+        this.profileBuilder = profileBuilder;
     }
 
     @GetMapping
@@ -65,7 +68,7 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCustomer(Customer customer) {
         try {
-            customerDao.deleteCustomer(customer);
+            customerDao.deleteCustomer(profileBuilder.createProfile(customer));
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
         }
