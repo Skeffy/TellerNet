@@ -1,5 +1,6 @@
 package io.github.skeffy.tellernet.dao;
 
+import io.github.skeffy.tellernet.service.ProfileBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -62,6 +63,14 @@ public class TestingDatabaseConfig {
 
         ds = dataSource;
         return ds;
+    }
+
+    @Bean
+    public ProfileBuilder profileBuilder() {
+        AccountDao accountDao = new JdbcAccountDao(adminJdbcTemplate);
+        CustomerDao customerDao = new JdbcCustomerDao(adminJdbcTemplate);
+        TransactionDao transactionDao = new JdbcTransactionDao(adminJdbcTemplate);
+        return new ProfileBuilder(accountDao, customerDao, transactionDao);
     }
 
     @PreDestroy
