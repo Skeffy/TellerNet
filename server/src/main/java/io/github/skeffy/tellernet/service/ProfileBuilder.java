@@ -1,12 +1,7 @@
 package io.github.skeffy.tellernet.service;
 
-import io.github.skeffy.tellernet.dao.AccountDao;
-import io.github.skeffy.tellernet.dao.CustomerDao;
-import io.github.skeffy.tellernet.dao.TransactionDao;
-import io.github.skeffy.tellernet.model.Account;
-import io.github.skeffy.tellernet.model.Customer;
-import io.github.skeffy.tellernet.model.Profile;
-import io.github.skeffy.tellernet.model.Transaction;
+import io.github.skeffy.tellernet.dao.*;
+import io.github.skeffy.tellernet.model.*;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
