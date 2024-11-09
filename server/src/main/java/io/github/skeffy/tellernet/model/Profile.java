@@ -41,4 +41,8 @@ public class Profile {
     public void setAccountTransactions(List<List<Transaction>> accountTransactions) {
         this.accountTransactions = accountTransactions;
     }
+
+    public boolean hasAccount() {
+        return !accounts.isEmpty();
+    }
 }
