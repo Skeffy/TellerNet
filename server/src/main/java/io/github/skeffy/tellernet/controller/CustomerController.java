@@ -66,7 +66,7 @@ public class CustomerController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCustomer(Customer customer) {
+    public void deleteCustomer(@RequestBody Customer customer) {
         try {
             customerDao.deleteCustomer(profileBuilder.createProfile(customer));
         } catch (DaoException e) {
