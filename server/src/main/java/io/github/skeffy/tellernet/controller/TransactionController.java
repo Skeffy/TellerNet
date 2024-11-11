@@ -32,8 +32,7 @@ public class TransactionController {
         }
     }
 
-    @GetMapping
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public Transaction getTransaction(@RequestParam int id) {
         try {
             return transactionDao.getTransactionById(id);
