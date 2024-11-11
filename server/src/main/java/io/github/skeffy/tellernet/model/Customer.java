@@ -1,8 +1,6 @@
 package io.github.skeffy.tellernet.model;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
 
 public class Customer {
 
