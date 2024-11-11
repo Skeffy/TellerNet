@@ -182,6 +182,9 @@ public class JdbcCustomerDao implements CustomerDao{
         if (!profile.hasAccount()) {
             try {
                 rowsAffected = jdbcTemplate.update(sql, profile.getCustomer().getCustomerId());
+                if (rowsAffected == 0) {
+                    throw new DaoException("No content deleted");
+                }
             } catch (CannotGetJdbcConnectionException e) {
                 throw new DaoException("Unable to connect to server or database", e);
             } catch (DataIntegrityViolationException e) {
