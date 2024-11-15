@@ -24,7 +24,7 @@ public class TransactionController {
     }
 
     @GetMapping
-    public List<Transaction> getTransactions(@RequestBody Account account) {
+    public List<Transaction> getTransactions(Account account) {
         try {
             return transactionDao.getTransactionsByAccount(account);
         } catch (DaoException e) {
