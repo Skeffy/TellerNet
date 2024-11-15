@@ -47,5 +47,10 @@ export default {
 </template>
 
 <style>
-
+#search {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
 </style>
