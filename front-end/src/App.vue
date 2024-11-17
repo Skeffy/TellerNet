@@ -7,6 +7,7 @@
         <h1>TellerNet</h1>
     </div>
     <nav>
+        <router-link to="/">Home</router-link>
         <router-link to="/accounts">Accounts</router-link>
         <router-link to="/customers">Customers</router-link>
     </nav>
@@ -33,7 +34,13 @@
 nav {
     display: flex;
     flex-direction: column;
+    width: 125px;
+    height: 100%;
     grid-area: nav;
+    align-items: center;
+    justify-content: space-evenly;
+    padding-top: 25px;
+    background-color: rgb(35, 35, 158);
 }
 
 main {
