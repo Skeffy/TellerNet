@@ -35,6 +35,7 @@ export default {
             <input type="text" name="lname" id="lname" v-model="customer.lastName">
             <label for="phone">Phone: </label>
             <input type="tel" name="phone" id="phone" v-model="customer.phone">
+            <br>
             <label for="address">Address: </label>
             <input type="text" name="address" id="address" v-model="customer.address">
             <label for="email">Email: </label>
@@ -52,5 +53,9 @@ export default {
     margin-bottom: 25px;
     padding-left: 10px;
     padding-right: 10px;
+}
+
+label {
+    padding-left: 15px;
 }
 </style>
