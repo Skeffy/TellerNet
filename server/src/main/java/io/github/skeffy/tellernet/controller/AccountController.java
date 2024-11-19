@@ -3,7 +3,6 @@ package io.github.skeffy.tellernet.controller;
 import io.github.skeffy.tellernet.dao.AccountDao;
 import io.github.skeffy.tellernet.exception.DaoException;
 import io.github.skeffy.tellernet.model.Account;
-import io.github.skeffy.tellernet.model.Customer;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -30,9 +29,9 @@ public class AccountController {
     }
 
     @GetMapping
-    public List<Account> getAccounts(Customer customer) {
+    public List<Account> getAccounts(int customerId) {
         try {
-            return accountDao.getAccountsByCustomer(customer);
+            return accountDao.getAccountsByCustomer(customerId);
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
         }
