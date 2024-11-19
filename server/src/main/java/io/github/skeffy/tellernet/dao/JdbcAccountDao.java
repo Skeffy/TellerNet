@@ -2,7 +2,6 @@ package io.github.skeffy.tellernet.dao;
 
 import io.github.skeffy.tellernet.exception.DaoException;
 import io.github.skeffy.tellernet.model.Account;
-import io.github.skeffy.tellernet.model.Customer;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -37,11 +36,11 @@ public class JdbcAccountDao implements AccountDao{
         return account;
     }
 
-    public List<Account> getAccountsByCustomer(Customer customer) {
+    public List<Account> getAccountsByCustomer(int customerId) {
         List<Account> accounts = new ArrayList<>();
         String sql = "SELECT * FROM account WHERE customer_id = ?";
         try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, customer.getCustomerId());
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, customerId);
             while (results.next()) {
                 accounts.add(mapRowToAccount(results));
             }
