@@ -67,9 +67,9 @@ public class CustomerController {
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCustomer(@RequestBody Customer customer) {
+    public void deleteCustomer(@RequestBody int customerId) {
         try {
-            customerDao.deleteCustomer(profileBuilder.createProfile(customer));
+            customerDao.deleteCustomer(profileBuilder.createProfileByCustomer(customerId));
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
         }
