@@ -20,18 +20,19 @@ public class ProfileBuilder {
         this.transactionDao = transactionDao;
     }
 
-    public Profile createProfile(Customer customer) {
+    public Profile createProfileByCustomer(int customerId) {
         Profile profile = new Profile();
-        profile.setCustomer(customer);
-        profile.setAccounts(accountDao.getAccountsByCustomer(customer));
+        profile.setCustomer(customerDao.getCustomerById(customerId));
+        profile.setAccounts(accountDao.getAccountsByCustomer(customerId));
         profile.setAccountTransactions(getAccountTransactions(profile));
         return profile;
     }
 
-    public Profile createProfile(Account account) {
+    public Profile createProfileByAccount(int accountId) {
         Profile profile = new Profile();
+        Account account = accountDao.getAccountById(accountId);
         profile.setCustomer(customerDao.getCustomerById(account.getCustomerId()));
-        profile.setAccounts(accountDao.getAccountsByCustomer(profile.getCustomer()));
+        profile.setAccounts(accountDao.getAccountsByCustomer(profile.getCustomer().getCustomerId()));
         profile.setAccountTransactions(getAccountTransactions(profile));
         return profile;
     }
