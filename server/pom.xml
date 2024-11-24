@@ -12,7 +12,7 @@
 	<artifactId>tellernet</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>tellernet</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Server application for TellerNet</description>
 	<url/>
 	<licenses>
 		<license/>
