@@ -1,14 +1,14 @@
 START TRANSACTION;
 
-DROP TABLE if EXISTS customer, account, transaction;
+DROP TABLE if EXISTS customer, account, transaction, users;
 
 CREATE TABLE customer (
 	customer_id SERIAL,
-	first_name VARCHAR(50) NOT NULL,
-	last_name VARCHAR(50) NOT NULL,
-	phone VARCHAR(12) NOT NULL,
-	address VARCHAR(100) NOT NULL,
-	email VARCHAR(100) NOT NULL,
+	first_name VARCHAR(50) NOT NULL CHECK (first_name <> ''),
+	last_name VARCHAR(50) NOT NULL CHECK (last_name <> ''),
+	phone VARCHAR(12) NOT NULL CHECK (phone <> ''),
+	address VARCHAR(100) NOT NULL CHECK (address <> ''),
+	email VARCHAR(100) NOT NULL CHECK (email <> ''),
 	dob DATE NOT NULL,
 	CONSTRAINT PK_customer PRIMARY KEY (customer_id)
 );
@@ -30,6 +30,14 @@ CREATE TABLE transaction (
 	description VARCHAR(100) NOT NULL,
 	CONSTRAINT PK_transaction PRIMARY KEY (transaction_id),
 	CONSTRAINT FK_transaction_account FOREIGN KEY (account_id) REFERENCES account(account_id)
+);
+
+CREATE TABLE users (
+	user_id SERIAL,
+	username varchar(50) NOT NULL UNIQUE,
+	password_hash varchar(200) NOT NULL,
+	name varchar(50) NOT NULL,
+	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
 COMMIT;
