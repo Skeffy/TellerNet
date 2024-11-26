@@ -1,17 +1,15 @@
-package com.techelevator.dao;
+package io.github.skeffy.tellernet.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-import com.techelevator.exception.DaoException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import com.techelevator.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Component
 public class JdbcUserDao implements UserDao {

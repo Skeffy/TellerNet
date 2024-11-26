@@ -1,6 +1,7 @@
-package com.techelevator.dao;
+package io.github.skeffy.tellernet.dao;
 
 import com.techelevator.model.User;
+
 import java.util.List;
 
 public interface UserDao {
