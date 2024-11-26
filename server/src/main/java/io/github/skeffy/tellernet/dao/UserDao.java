@@ -1,6 +1,6 @@
 package io.github.skeffy.tellernet.dao;
 
-import com.techelevator.model.User;
+import io.github.skeffy.tellernet.model.User;
 
 import java.util.List;
 
