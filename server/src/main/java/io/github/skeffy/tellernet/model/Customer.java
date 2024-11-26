@@ -1,15 +1,24 @@
 package io.github.skeffy.tellernet.model;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 
 public class Customer {
 
     private int customerId;
+    @NotEmpty
     private String firstName;
+    @NotEmpty
     private String lastName;
+    @NotEmpty
     private String phone;
+    @NotEmpty
     private String address;
+    @NotEmpty
     private String email;
+    @NotNull
     private LocalDate dob;
 
     public Customer(int customerId, String firstName, String lastName, String phone, String address, String email, LocalDate dob) {
