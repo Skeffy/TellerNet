@@ -1,5 +1,7 @@
 package io.github.skeffy.tellernet.dao;
 
+import io.github.skeffy.tellernet.exception.DaoException;
+import io.github.skeffy.tellernet.model.User;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Component
 public class JdbcUserDao implements UserDao {
@@ -83,8 +84,7 @@ public class JdbcUserDao implements UserDao {
             String password_hash = new BCryptPasswordEncoder().encode(newUser.getPassword());
 
             int userId = jdbcTemplate.queryForObject(insertUserSql, int.class,
-                    newUser.getUsername(), password_hash, newUser.getAuthoritiesString(), newUser.getName(), newUser.getAddress(),
-                    newUser.getCity(), newUser.getStateCode(), newUser.getZIP());
+                    newUser.getUsername(), password_hash, newUser.getName());
             user =  getUserById(userId);
         }
         catch (CannotGetJdbcConnectionException e) {
@@ -101,13 +101,7 @@ public class JdbcUserDao implements UserDao {
         user.setId(rs.getInt("user_id"));
         user.setUsername(rs.getString("username"));
         user.setPassword(rs.getString("password_hash"));
-        user.setAuthorities(Objects.requireNonNull(rs.getString("role")));
         user.setName(rs.getString("name"));
-        user.setAddress(rs.getString("address"));
-        user.setCity(rs.getString("city"));
-        user.setStateCode(rs.getString("state_code"));
-        user.setZIP(rs.getString("zip"));
-        user.setActivated(true);
         return user;
     }
 }
