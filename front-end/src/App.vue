@@ -1,16 +1,12 @@
 <script setup>
-
+import directory from './components/Directory.vue';
 </script>
 
 <template>
     <div id="heading">
         <h1>TellerNet</h1>
     </div>
-    <nav>
-        <router-link to="/">Home</router-link>
-        <router-link to="/accounts">Accounts</router-link>
-        <router-link to="/customers">Customers</router-link>
-    </nav>
+    <directory />
     <main>
         <router-view />
     </main>
