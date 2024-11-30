@@ -29,13 +29,18 @@ export default {
 
     updateCustomer(customer) {
         return axios.put('/customers', {
-            data: customer
+            firstName: customer.firstName,
+            lastName: customer.lastName,
+            phone: customer.phone,
+            address: customer.address,
+            email: customer.email,
+            dob: customer.dob
         });
     },
 
     deleteCustomer(customer) {
         return axios.delete('/customers', {
-            data: customer
+            customerId: customer.customerId
         });
     }
 }
