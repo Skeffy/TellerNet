@@ -5,7 +5,6 @@ export default {
     getCustomers(customer) {
         return axios.get('/customers', {
             params: {
-                customerId: customer.customerId,
                 firstName: customer.firstName,
                 lastName: customer.lastName,
                 phone: customer.phone,
