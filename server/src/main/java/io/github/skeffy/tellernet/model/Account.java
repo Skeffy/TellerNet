@@ -1,5 +1,7 @@
 package io.github.skeffy.tellernet.model;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.List;
 public class Account {
 
     private int accountId;
+    @NotNull
     private int customerId;
     private String nickname = "";
     BigDecimal balance = BigDecimal.valueOf(0.00);
