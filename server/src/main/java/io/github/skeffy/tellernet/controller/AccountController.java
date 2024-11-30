@@ -3,6 +3,7 @@ package io.github.skeffy.tellernet.controller;
 import io.github.skeffy.tellernet.dao.AccountDao;
 import io.github.skeffy.tellernet.exception.DaoException;
 import io.github.skeffy.tellernet.model.Account;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -39,7 +40,7 @@ public class AccountController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Account createAccount(@RequestBody Account account) {
+    public Account createAccount(@RequestBody @Valid Account account) {
         try {
             return accountDao.createAccount(account);
         } catch (DaoException e) {
