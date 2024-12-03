@@ -38,7 +38,7 @@ public class JdbcAccountDaoTests extends BaseDaoTests{
 
     @Test
     public void getAccountsByCustomer_returns_all_accounts_of_given_customer() {
-        List<Account> accounts = dao.getAccountsByCustomer(CUSTOMER_1);
+        List<Account> accounts = dao.getAccountsByCustomer(CUSTOMER_1.getCustomerId());
 
         Assert.assertNotNull(accounts);
         Assert.assertEquals(2, accounts.size());
