@@ -3,9 +3,11 @@ package io.github.skeffy.tellernet.dao;
 import io.github.skeffy.tellernet.exception.DaoException;
 
 import io.github.skeffy.tellernet.model.Customer;
+import io.github.skeffy.tellernet.service.ProfileBuilder;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.time.LocalDate;
@@ -20,11 +22,13 @@ public class JdbcCustomerDaoTests extends BaseDaoTests{
     protected static final Customer DELETE_CUSTOMER = new Customer(4, "Joseph", "Bank", "518-348-3481", "505 Main St", "originalbanker@bing.com", LocalDate.of(1996,6,16));
 
     private JdbcCustomerDao dao;
+    @Autowired
+    private ProfileBuilder profileBuilder;
 
     @Before
     public void setup() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        dao = new JdbcCustomerDao(jdbcTemplate, new JdbcAccountDao(jdbcTemplate));
+        dao = new JdbcCustomerDao(jdbcTemplate);
     }
 
     @Test
@@ -128,13 +132,13 @@ public class JdbcCustomerDaoTests extends BaseDaoTests{
     @Test
     public void deleteCustomer_throws_exception_for_customer_with_open_accounts() {
         Assert.assertThrows(DaoException.class, () -> {
-            dao.deleteCustomer(CUSTOMER_1);
+            dao.deleteCustomer(profileBuilder.createProfileByCustomer(CUSTOMER_1.getCustomerId()));
         });
     }
 
     @Test
     public void deleteCustomer_removes_customer_with_no_accounts() {
-        int rowsAffected = dao.deleteCustomer(DELETE_CUSTOMER);
+        int rowsAffected = dao.deleteCustomer(profileBuilder.createProfileByCustomer(DELETE_CUSTOMER.getCustomerId()));
         Customer deletedCustomer = dao.getCustomerById(DELETE_CUSTOMER.getCustomerId());
 
         Assert.assertNull(deletedCustomer);
