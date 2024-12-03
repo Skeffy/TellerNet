@@ -23,7 +23,7 @@ public class TestingDatabaseConfig {
     private static final String DB_PORT =
             Objects.requireNonNullElse(System.getenv("DB_PORT"), "5432");
     private static final String DB_NAME =
-            Objects.requireNonNullElse(System.getenv("DB_NAME"), "m2_final_project_test");
+            Objects.requireNonNullElse(System.getenv("DB_NAME"), "tellernet");
     private static final String DB_USERNAME =
             Objects.requireNonNullElse(System.getenv("DB_USERNAME"), "postgres");
     private static final String DB_PASSWORD =
@@ -66,10 +66,11 @@ public class TestingDatabaseConfig {
     }
 
     @Bean
-    public ProfileBuilder profileBuilder() {
-        AccountDao accountDao = new JdbcAccountDao(adminJdbcTemplate);
-        CustomerDao customerDao = new JdbcCustomerDao(adminJdbcTemplate);
-        TransactionDao transactionDao = new JdbcTransactionDao(adminJdbcTemplate);
+    public ProfileBuilder profileBuilder() throws SQLException {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource());
+        AccountDao accountDao = new JdbcAccountDao(jdbcTemplate);
+        CustomerDao customerDao = new JdbcCustomerDao(jdbcTemplate);
+        TransactionDao transactionDao = new JdbcTransactionDao(jdbcTemplate);
         return new ProfileBuilder(accountDao, customerDao, transactionDao);
     }
 
