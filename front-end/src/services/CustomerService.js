@@ -5,7 +5,6 @@ export default {
     getCustomers(customer) {
         return axios.get('/customers', {
             params: {
-                customerId: customer.customerId,
                 firstName: customer.firstName,
                 lastName: customer.lastName,
                 phone: customer.phone,
@@ -18,19 +17,29 @@ export default {
 
     createCustomer(customer) {
         return axios.post('/customers', {
-            data: customer
+            firstName: customer.firstName,
+            lastName: customer.lastName,
+            phone: customer.phone,
+            address: customer.address,
+            email: customer.email,
+            dob: customer.dob
         });
     },
 
     updateCustomer(customer) {
         return axios.put('/customers', {
-            data: customer
+            firstName: customer.firstName,
+            lastName: customer.lastName,
+            phone: customer.phone,
+            address: customer.address,
+            email: customer.email,
+            dob: customer.dob
         });
     },
 
     deleteCustomer(customer) {
         return axios.delete('/customers', {
-            data: customer
+            customerId: customer.customerId
         });
     }
 }

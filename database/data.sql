@@ -24,4 +24,7 @@ INSERT INTO transaction (account_id, amount, description) VALUES
 	(4, 350.00, 'Cash deposit'),
 	(4, -83.57, 'Amazon.com');
 
+INSERT INTO users (username, password_hash, name) VALUES
+	('user', '$2a$10$tmxuYYg1f5T0eXsTPlq/V.DJUKmRHyFbJ.o.liI1T35TFbjs2xiem', 'John Doe');
+
 COMMIT;

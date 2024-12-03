@@ -4,6 +4,7 @@ import io.github.skeffy.tellernet.dao.CustomerDao;
 import io.github.skeffy.tellernet.exception.DaoException;
 import io.github.skeffy.tellernet.model.Customer;
 import io.github.skeffy.tellernet.service.ProfileBuilder;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -48,7 +49,7 @@ public class CustomerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Customer createCustomer(@RequestBody Customer customer) {
+    public Customer createCustomer(@RequestBody @Valid Customer customer) {
         try {
             return customerDao.createCustomer(customer);
         } catch (DaoException e) {
