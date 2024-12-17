@@ -6,7 +6,12 @@ export default {
 
 <template>
     <tr>
-        <td>{{ result.firstName }} {{ result.lastName }}</td>
+        
+        <td>
+            <router-link :to="`/customer/${result.customerId}`">
+                {{ result.firstName }} {{ result.lastName }}
+            </router-link>
+        </td>
         <td>{{ result.phone }}</td>
         <td>{{ result.email }}</td>
         <td>{{ result.address }}</td>
@@ -17,3 +22,5 @@ export default {
 <style scoped>
 
 </style>
+<router-link :to="`/customer/${result.id}`">
+        </router-link>
