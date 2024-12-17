@@ -3,6 +3,7 @@ import HomeView from '@/views/HomeView.vue';
 import CustomersView from '@/views/CustomersView.vue';
 import CreateAccountView from '@/views/CreateAccountView.vue';
 import CreateCustomerView from '@/views/CreateCustomerView.vue';
+import AccountView from '@/views/AccountView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,7 +30,13 @@ const router = createRouter({
       path: '/newaccount',
       name: 'newAccount',
       component: CreateAccountView
-    }
+    },
+
+    {
+      path: '/account',
+      name: 'account',
+      component: AccountView
+    },
   ]
 });
 
