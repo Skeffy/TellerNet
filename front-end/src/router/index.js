@@ -4,6 +4,7 @@ import CustomersView from '@/views/CustomersView.vue';
 import CreateAccountView from '@/views/CreateAccountView.vue';
 import CreateCustomerView from '@/views/CreateCustomerView.vue';
 import AccountView from '@/views/AccountView.vue';
+import CustomerView from '@/views/CustomerView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,9 +34,15 @@ const router = createRouter({
     },
 
     {
-      path: '/account',
+      path: '/account/:id',
       name: 'account',
       component: AccountView
+    },
+
+    {
+      path: '/customer/:id',
+      name: 'customer',
+      component: CustomerView
     },
   ]
 });
