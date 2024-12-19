@@ -22,5 +22,3 @@ export default {
 <style scoped>
 
 </style>
-<router-link :to="`/customer/${result.id}`">
-        </router-link>
