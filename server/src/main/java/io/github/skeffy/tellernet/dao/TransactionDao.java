@@ -1,6 +1,5 @@
 package io.github.skeffy.tellernet.dao;
 
-import io.github.skeffy.tellernet.model.Account;
 import io.github.skeffy.tellernet.model.Transaction;
 
 import java.util.List;
