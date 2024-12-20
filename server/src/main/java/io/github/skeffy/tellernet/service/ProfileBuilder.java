@@ -40,7 +40,7 @@ public class ProfileBuilder {
     private List<List<Transaction>> getAccountTransactions(Profile profile) {
         List<List<Transaction>> accountTransactions = new ArrayList<>();
         for (Account account : profile.getAccounts()) {
-            accountTransactions.add(transactionDao.getTransactionsByAccount(account));
+            accountTransactions.add(transactionDao.getTransactionsByAccount(account.getAccountId()));
         }
         return accountTransactions;
     }
