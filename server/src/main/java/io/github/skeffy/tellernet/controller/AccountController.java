@@ -30,7 +30,7 @@ public class AccountController {
     }
 
     @GetMapping
-    public List<Account> getAccounts(Integer customerId) {
+    public List<Account> getAccounts(int customerId) {
         try {
             return accountDao.getAccountsByCustomer(customerId);
         } catch (DaoException e) {
