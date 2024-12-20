@@ -24,18 +24,9 @@ public class TransactionController {
     }
 
     @GetMapping
-    public List<Transaction> getTransactions(Account account) {
+    public List<Transaction> getTransactions(int accountId) {
         try {
-            return transactionDao.getTransactionsByAccount(account);
-        } catch (DaoException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
-        }
-    }
-
-    @GetMapping("/{id}")
-    public Transaction getTransaction(@RequestParam int id) {
-        try {
-            return transactionDao.getTransactionById(id);
+            return transactionDao.getTransactionsByAccount(accountId);
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
         }
