@@ -4,6 +4,8 @@ export function createStore() {
     return _createStore({
         state: {
             customers: [],
+            accounts: [],
+            transactions: []
         },
 
         mutations: {
