@@ -37,11 +37,11 @@ public class JdbcTransactionDao implements TransactionDao{
     }
 
     @Override
-    public List<Transaction> getTransactionsByAccount(Account account) {
+    public List<Transaction> getTransactionsByAccount(int accountId) {
         List<Transaction> transactions = new ArrayList<>();
         String sql = "SELECT * FROM transaction WHERE account_id = ?";
         try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, account.getAccountId());
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, accountId);
             while (results.next()) {
                 transactions.add(mapRowToTransaction(results));
             }
