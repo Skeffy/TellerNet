@@ -12,6 +12,14 @@ export function createStore() {
             SET_CUSTOMERS(state, payload) {
                 state.customers = payload;
             },
+
+            SET_ACCOUNTS(state, payload) {
+                state.accounts = payload;
+            },
+
+            SET_TRANSACTIONS(state, payload) {
+                state.transactions = payload;
+            },
         }
     });
 }
