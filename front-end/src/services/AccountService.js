@@ -2,9 +2,11 @@ import axios from 'axios';
 
 export default {
 
-    getAccounts(customer) {
-        return axios.get('/account', {
-            customerId: customer.customerId
+    getAccounts(id) {
+        return axios.get('/accounts', {
+            params: {
+                customerId: id
+            }
         });
     },
 
