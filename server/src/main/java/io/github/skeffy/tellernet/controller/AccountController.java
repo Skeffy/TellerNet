@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/accounts")
+@CrossOrigin
 public class AccountController {
 
     private AccountDao accountDao;
