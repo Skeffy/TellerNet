@@ -1,6 +1,6 @@
 <script>
 import Search from '@/components/Search.vue';
-import ResultsList from '@/components/ResultsList.vue';
+import ResultsList from '@/components/lists/ResultsList.vue';
 
 export default {
     components: {
