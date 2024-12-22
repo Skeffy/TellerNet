@@ -1,13 +1,14 @@
 <script>
 export default {
-
     props: ['account'],
 }
 </script>
 
 <template>
 <tr>
-    <td>{{ account.accountId }}</td>
+    <router-link :to="`/account/${account.accountId}`">
+        <td>{{ account.accountId }}</td>
+    </router-link>
     <td>{{ account.nickname }}</td>
     <td>{{ account.balance }}</td>
 </tr>
