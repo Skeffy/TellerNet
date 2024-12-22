@@ -1,6 +1,6 @@
 <script>
 export default {
-    params: ['transaction'],
+    props: ['transaction'],
 }
 </script>
 
