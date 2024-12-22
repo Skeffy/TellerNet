@@ -2,7 +2,6 @@
 import Account from './Account.vue';
 
 export default {
-
     components: {
         Account
     }
