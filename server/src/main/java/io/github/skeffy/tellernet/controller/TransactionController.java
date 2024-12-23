@@ -2,7 +2,6 @@ package io.github.skeffy.tellernet.controller;
 
 import io.github.skeffy.tellernet.dao.TransactionDao;
 import io.github.skeffy.tellernet.exception.DaoException;
-import io.github.skeffy.tellernet.model.Account;
 import io.github.skeffy.tellernet.model.Transaction;
 import io.github.skeffy.tellernet.service.TransactionService;
 import org.springframework.http.HttpStatus;

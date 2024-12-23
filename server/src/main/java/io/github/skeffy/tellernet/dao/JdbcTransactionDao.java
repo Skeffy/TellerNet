@@ -1,7 +1,6 @@
 package io.github.skeffy.tellernet.dao;
 
 import io.github.skeffy.tellernet.exception.DaoException;
-import io.github.skeffy.tellernet.model.Account;
 import io.github.skeffy.tellernet.model.Transaction;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
