@@ -9,10 +9,10 @@ INSERT INTO customer (first_name, last_name, phone, address, email, dob) VALUES
 
 INSERT INTO account (customer_id, nickname, balance) VALUES
 	(1, 'checking', 0.00),
-	(1, 'savings', 0.00),
-	(2, 'fun money', 804.37),
-	(3, 'secret stash', 500.00),
-	(4, 'savings', 266.43),
+	(1, 'savings', 804.37),
+	(2, 'fun money', 500.00),
+	(3, 'secret stash', 266.43),
+	(4, 'savings', 0.00),
 	(5, 'checking', 0.00),
 	(3, '', 1056.62);
 
