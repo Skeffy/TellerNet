@@ -20,6 +20,12 @@ export function createStore() {
             SET_TRANSACTIONS(state, payload) {
                 state.transactions = payload;
             },
+
+            CLEAR(state) {
+                state.customers = [];
+                state.accounts = [];
+                state.transactions = [];
+            }
         }
     });
 }
