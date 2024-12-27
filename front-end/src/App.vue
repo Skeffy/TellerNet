@@ -15,7 +15,7 @@ import directory from './components/Directory.vue';
 <style>
 #app {
     display: grid;
-    grid-template-columns: 1fr, 4fr, 1fr;
+    grid-template-columns: 1fr 4fr 1fr;
     grid-template-areas: 
     "heading heading heading"
     "nav body hold";
