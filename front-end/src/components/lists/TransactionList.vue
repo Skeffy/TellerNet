@@ -9,8 +9,8 @@ export default {
 </script>
 
 <template>
-<div id="transaction-list" class="list">
-    <table>
+<div id="transaction-list">
+    <table class="list">
         <tbody>
             <tr>
                 <th>Date</th>

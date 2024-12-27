@@ -9,8 +9,8 @@ export default {
 </script>
 
 <template>
-    <div id="search-results" class="list">
-        <table>
+    <div id="search-results">
+        <table class="list">
             <tbody>
                 <tr>
                     <th>Name</th>
@@ -28,9 +28,5 @@ export default {
 <style scoped>
 #search-results {
     justify-items: center;
-}
-
-th {
-    width: 20%;
 }
 </style>
