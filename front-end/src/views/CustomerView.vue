@@ -22,5 +22,7 @@ export default {
 </template>
 
 <style>
-
+#customer-view{
+    width: 100%;
+}
 </style>
