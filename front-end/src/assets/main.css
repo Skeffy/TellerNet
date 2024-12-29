@@ -23,6 +23,10 @@ tr:nth-child(odd){
   background-color: #bbbbbb
 }
 
+td{
+  padding-left: 10px;
+}
+
 .list{
   width: 100%;
 }
