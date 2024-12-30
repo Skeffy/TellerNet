@@ -25,16 +25,13 @@ import directory from './components/Directory.vue';
     grid-area: heading;
     display: flex;
     justify-content: center;
+    border-bottom: 2px solid rgb(35, 35, 158);
 }
 
-nav {
-    display: flex;
-    flex-direction: column;
+aside {
     width: 125px;
     height: 100%;
     grid-area: nav;
-    align-items: center;
-    justify-content: space-evenly;
     padding-top: 25px;
     background-color: rgb(35, 35, 158);
 }
