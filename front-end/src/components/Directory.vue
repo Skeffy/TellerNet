@@ -19,6 +19,11 @@ export default {
     </aside>
 </template>
 
-<style>
-
+<style scoped>
+nav{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    justify-self: center;
+}
 </style>
