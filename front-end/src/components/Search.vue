@@ -48,10 +48,11 @@ export default {
     </div>
 </template>
 
-<style>
+<style scoped>
 #search {
     display: flex;
     align-items: center;
+    justify-content: center;
     height: 100px;
     margin-top: 25px;
     margin-bottom: 25px;
