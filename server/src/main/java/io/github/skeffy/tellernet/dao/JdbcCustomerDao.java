@@ -64,7 +64,7 @@ public class JdbcCustomerDao implements CustomerDao{
         firstName = "%" + firstName + "%";
         lastName = "%" + lastName + "%";
         List<Customer> customers = new ArrayList<>();
-        String sql = "SELECT * FROM customer WHERE first_name ILIKE ? AND last_name ILIKE ?";
+        String sql = "SELECT * FROM customer WHERE first_name ILIKE ? AND last_name ILIKE ? ORDER BY first_name";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, firstName, lastName);
             while (results.next()) {
