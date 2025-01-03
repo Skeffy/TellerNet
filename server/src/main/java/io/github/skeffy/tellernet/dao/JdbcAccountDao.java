@@ -38,7 +38,7 @@ public class JdbcAccountDao implements AccountDao{
 
     public List<Account> getAccountsByCustomer(int customerId) {
         List<Account> accounts = new ArrayList<>();
-        String sql = "SELECT * FROM account WHERE customer_id = ?";
+        String sql = "SELECT * FROM account WHERE customer_id = ? ORDER BY account_id";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, customerId);
             while (results.next()) {
