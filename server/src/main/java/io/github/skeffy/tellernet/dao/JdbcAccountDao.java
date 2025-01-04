@@ -55,7 +55,7 @@ public class JdbcAccountDao implements AccountDao{
         int rowsAffected;
         String sql = "UPDATE account SET balance = ? WHERE account_id = ?";
         try {
-            rowsAffected = jdbcTemplate.update(sql, account.getBalance());
+            rowsAffected = jdbcTemplate.update(sql, account.getBalance(), account.getAccountId());
             if (rowsAffected == 0) {
                 throw new DaoException("Zero rows affected. Expected at least one");
             } else {
