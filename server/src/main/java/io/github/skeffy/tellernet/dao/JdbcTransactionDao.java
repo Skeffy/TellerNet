@@ -38,7 +38,7 @@ public class JdbcTransactionDao implements TransactionDao{
     @Override
     public List<Transaction> getTransactionsByAccount(int accountId) {
         List<Transaction> transactions = new ArrayList<>();
-        String sql = "SELECT * FROM transaction WHERE account_id = ? ORDER BY transaction_id DESCENDING";
+        String sql = "SELECT * FROM transaction WHERE account_id = ? ORDER BY transaction_id DESC";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, accountId);
             while (results.next()) {
