@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/customers")
-@CrossOrigin
 public class CustomerController {
 
     private CustomerDao customerDao;
@@ -27,7 +26,7 @@ public class CustomerController {
     @GetMapping
     public List<Customer> getCustomers(Customer customer) {
         try {
-            if (customer == null) {
+            if (customer.getFirstName() == null) {
                 return customerDao.getCustomers();
             } else if (!customer.getFirstName().isEmpty() || !customer.getLastName().isEmpty()) {
                 return customerDao.getCustomersByName(customer.getFirstName(), customer.getLastName());
