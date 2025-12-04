@@ -36,6 +36,20 @@ public class JdbcAccountDao implements AccountDao{
         return account;
     }
 
+    public List<Account> getAccounts() {
+        List<Account> accounts = new ArrayList<>();
+        String sql = "SELECT * FROM account;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while(results.next()) {
+                accounts.add(mapRowToAccount(results));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return accounts;
+    }
+
     public List<Account> getAccountsByCustomer(int customerId) {
         List<Account> accounts = new ArrayList<>();
         String sql = "SELECT * FROM account WHERE customer_id = ? ORDER BY account_id";

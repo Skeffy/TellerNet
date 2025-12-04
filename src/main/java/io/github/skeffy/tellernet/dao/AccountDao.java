@@ -7,6 +7,7 @@ import java.util.List;
 public interface AccountDao {
 
     Account getAccountById(int accountId);
+    List<Account> getAccounts();
     List<Account> getAccountsByCustomer(int customerId);
     Account transact(Account account);
     Account createAccount(Account account);
