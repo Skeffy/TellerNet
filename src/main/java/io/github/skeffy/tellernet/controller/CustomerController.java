@@ -46,6 +46,15 @@ public class CustomerController {
         }
     }
 
+    @GetMapping
+    public List<Customer> getAllCustomer() {
+        try {
+            return customerDao.getCustomers();
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
+        }
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Customer createCustomer(@RequestBody @Valid Customer customer) {
