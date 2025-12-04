@@ -30,6 +30,15 @@ public class AccountController {
     }
 
     @GetMapping
+    public List<Account> getAllAccounts() {
+        try {
+            return accountDao.getAccounts();
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "DAO error - " + e.getMessage());
+        }
+    }
+
+    @GetMapping
     public List<Account> getAccounts(int customerId) {
         try {
             return accountDao.getAccountsByCustomer(customerId);
