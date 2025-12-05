@@ -46,7 +46,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping
+    @GetMapping(path = "/all")
     public List<Customer> getAllCustomer() {
         try {
             return customerDao.getCustomers();

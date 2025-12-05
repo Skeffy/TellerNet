@@ -29,7 +29,7 @@ public class AccountController {
         }
     }
 
-    @GetMapping
+    @GetMapping(path = "/all")
     public List<Account> getAllAccounts() {
         try {
             return accountDao.getAccounts();
